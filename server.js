@@ -1,16 +1,11 @@
 const http = require("http");
 const { v4: uuidv4 } = require("uuid");
+const headers = require("./headers");
 const errorHandle = require("./errorHandle");
 const todos = [];
 const port = 8080;
 
 const requestListener = (req, res)=>{
-    const headers = {
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization, Content-Length, X-Requested-With',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'PATCH, POST, GET,OPTIONS,DELETE',
-       'Content-Type': 'application/json'
-    };
 
     let body = "";
     req.on("data", chunk=>{
@@ -100,8 +95,7 @@ const requestListener = (req, res)=>{
             }
         })
         
-    }
-    else if (req.method == "OPTIONS"){
+    }else if (req.method == "OPTIONS"){
         res.writeHead(200, headers);
         res.end();
     
