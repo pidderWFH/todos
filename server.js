@@ -36,11 +36,13 @@ const requestListener = (req, res)=>{
                     }));
                     res.end();
                 }else{
-                    errorHandle(res);
+                    const err = 400;
+                    errorHandle(err, res);
                 }
                 
             }catch{
-                errorHandle(res);
+                const err = 400;
+                errorHandle(err, res);
             }
 
             
@@ -67,7 +69,8 @@ const requestListener = (req, res)=>{
             }));
             res.end();
         }else{
-            errorHandle(res);
+            const err= 401;
+            errorHandle(err, res);
         }
         
     }else if (req.url.startsWith("/todos/") && req.method =="PATCH"){
@@ -86,27 +89,24 @@ const requestListener = (req, res)=>{
                 }));
                 res.end();
                 }else{
-                    errorHandle(res);
+                    const err = 400;
+                    errorHandle(err, res);
                 }
                
                 res.end();
             }catch{
-                errorHandle(res);
+                const err = 400;
+                errorHandle(err, res);
             }
         })
         
     }else if (req.method == "OPTIONS"){
         res.writeHead(200, headers);
         res.end();
-    
     }
     else{
-        res.writeHead(404, headers);
-        res.write(JSON.stringify({
-            "status": "false",
-            "message": "無此網頁",
-        }));
-        res.end();
+        err = 404;
+        errorHandle(err, res);
     }
     
 }
